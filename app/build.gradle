@@ -30,7 +30,7 @@ android {
         jvmTarget = '1.8'
     }
     buildFeatures{
-        viewBinding true
+        viewBinding true // nos permite comunicar el XML con el archivo Kotlin
     }
 }
 
