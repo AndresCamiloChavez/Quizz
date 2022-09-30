@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivityPregunta">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="20dp"
+        android:layout_height="500dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            android:textAlignment="center">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Aquí va la pregunta ca la pregunta completa lorem con muchas letras para saba la pregunta completa lorem con muchas letras para sababa la pregunta completa lorem con muchas letras para saber que es lo que está pasando será que se sobre sale de la pantalla "
+                android:textAlignment="center"
+                android:textSize="20sp">
+
+            </TextView>
+            <ScrollView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_margin="10dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    >
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_width="match_parent"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#36E8E8E8"
+                        android:text="texto de la repuesta"
+                        android:textSize="14sp"
+                        app:cornerRadius="5dp"
+                        android:layout_marginVertical="5dp"
+                        app:rippleColor="@null"
+                        app:strokeColor="#BCBCBC" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_marginVertical="5dp"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#36E8E8E8"
+                        android:text="texto de la repuesta"
+                        android:textSize="14sp"
+                        app:cornerRadius="5dp"
+                        app:rippleColor="@null"
+                        app:strokeColor="#BCBCBC" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:layout_marginVertical="5dp"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#36E8E8E8"
+                        android:text="texto de la repuesta"
+                        android:textSize="14sp"
+                        app:cornerRadius="5dp"
+                        app:rippleColor="@null"
+                        app:strokeColor="#BCBCBC" />
+
+                </LinearLayout>
+
+
+
+            </ScrollView>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/black"
+                android:textSize="16sp"
+                android:text="Enviar"
+                />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
