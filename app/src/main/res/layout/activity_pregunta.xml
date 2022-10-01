@@ -23,6 +23,7 @@
             android:textAlignment="center">
 
             <TextView
+                android:id="@+id/txtContenidoPregunta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Aquí va la pregunta ca la pregunta completa lorem con muchas letras para saba la pregunta completa lorem con muchas letras para sababa la pregunta completa lorem con muchas letras para saber que es lo que está pasando será que se sobre sale de la pantalla "
@@ -44,41 +45,38 @@
                     android:layout_gravity="center"
                     >
 
-                    <com.google.android.material.button.MaterialButton
+                    <TextView
+                        android:id="@+id/opcion1"
                         android:layout_width="match_parent"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="#36E8E8E8"
-                        android:text="texto de la repuesta"
-                        android:textSize="14sp"
-                        app:cornerRadius="5dp"
-                        android:layout_marginVertical="5dp"
-                        app:rippleColor="@null"
-                        app:strokeColor="#BCBCBC" />
+                        android:text="option1"
+                        android:background="@color/teal_700"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"/>
 
-                    <com.google.android.material.button.MaterialButton
-                        android:layout_marginVertical="5dp"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
+                    <TextView
+                        android:id="@+id/opcion2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="#36E8E8E8"
-                        android:text="texto de la repuesta"
-                        android:textSize="14sp"
-                        app:cornerRadius="5dp"
-                        app:rippleColor="@null"
-                        app:strokeColor="#BCBCBC" />
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:background="@color/teal_700"
+                        android:text="option1"
+                        android:textSize="18sp" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:layout_marginVertical="5dp"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
+                    <TextView
+                        android:id="@+id/opcion3"
+                        android:background="@color/teal_700"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="#36E8E8E8"
-                        android:text="texto de la repuesta"
-                        android:textSize="14sp"
-                        app:cornerRadius="5dp"
-                        app:rippleColor="@null"
-                        app:strokeColor="#BCBCBC" />
+                        android:text="option1"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"/>
 
                 </LinearLayout>
 
@@ -87,6 +85,7 @@
             </ScrollView>
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEnviar"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
