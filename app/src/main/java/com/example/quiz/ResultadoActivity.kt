@@ -19,15 +19,17 @@ import com.github.mikephil.charting.formatter.PercentFormatter
 class ResultadoActivity : AppCompatActivity() {
 
     private var back_pressed: Long = 0
-    private lateinit var graficoCirular: PieChart
-    private lateinit var graficoBarras: BarChart
+    private lateinit var graficoCirular: PieChart // definimos el gráfico "dona"
+    private lateinit var graficoBarras: BarChart // definimos el gráfico de barras
 
-    private lateinit var binding: ActivityResultadoBinding
+    private lateinit var binding: ActivityResultadoBinding // para conectar el XML con Kotlin
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityResultadoBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = ActivityResultadoBinding.inflate(layoutInflater) // para enlazar el XML y Kotlin
+        setContentView(binding.root)// para enlazar el XML y Kotlin
+
+        //Obtenemos la lista de preguntas respondidas
         val listaRespuestas = intent.extras!!.getSerializable("preguntasRespondidas") as ArrayList<Pregunta>
 
         consutruirGraficoCirular(listaRespuestas)
@@ -40,33 +42,32 @@ class ResultadoActivity : AppCompatActivity() {
      * Método que crea un gráfico de circular con las respuestas correctas e incorrectas
      */
     fun consutruirGraficoCirular( listaPreguntasConRespuestas: List<Pregunta>) {
-
         graficoCirular = binding.graficoCirularVista
-
         var respuestasCorrectas = 0
         var respuestasIncorretas = 0
 
+        //recorremos la preguntas
         listaPreguntasConRespuestas.forEach { preguntas ->
+            //recorremos las respuestas de las preguntas
             preguntas.respuestas.forEach { respuesta ->
+                //validamos cuales son las respuestas correctas selccionadas por el usuario
                 if (respuesta.esCorrecto && respuesta.opcionSeleccionadaPorUsuario) {
                     respuestasCorrectas++
                 }
             }
         }
-
+        //las respuestas incorrectas ---->  es el resultado del total de preguntas menos las correctas
         respuestasIncorretas = (listaPreguntasConRespuestas.size - respuestasCorrectas)
-
+        // Es para poder arrastrar el gráfico
         graficoCirular.setDragDecelerationFrictionCoef(0.95f)
-        graficoCirular.setDragDecelerationFrictionCoef(0.95f)
-
         //animación en el gráfico
         graficoCirular.animateY(1400, Easing.EaseInOutQuad)
-
         val entries: ArrayList<PieEntry> = ArrayList()
+        // agregamos la parte de respuestas correctas e incorrectas
         entries.add(PieEntry(respuestasCorrectas.toFloat()))
         entries.add(PieEntry(respuestasIncorretas.toFloat()))
         val dataSet = PieDataSet(entries, "")
-
+        // agregamos los colores que van a tener las secciones
         val colors: ArrayList<Int> = ArrayList()
         colors.add(Color.GREEN)
         colors.add(Color.RED)
@@ -100,16 +101,14 @@ class ResultadoActivity : AppCompatActivity() {
             }
         }
         var barDataSet = BarDataSet(barEntriesList, "Preguntas contestadas correctamente")
-
-        graficoBarras.xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+        graficoBarras.xAxis.valueFormatter = IndexAxisValueFormatter(labels) // agregamos que pregunta corresponde a cada barra
         var barData = BarData(barDataSet)
         graficoBarras.data = barData
-        graficoBarras.setScaleMinima(1.6f, 0.1f)
+        graficoBarras.setScaleMinima(1.6f, 0.1f) // definimos un tamaño en especifo para que se vea
         barDataSet.valueTextColor = Color.BLACK
         barDataSet.setColor(resources.getColor(R.color.purple_200))
         barDataSet.valueTextSize = 16f
         graficoBarras.description.isEnabled = false
-
     }
     override fun onBackPressed() {
         if (back_pressed + 2000 > System.currentTimeMillis()){

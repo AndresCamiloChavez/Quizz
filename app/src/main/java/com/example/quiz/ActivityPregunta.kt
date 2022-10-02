@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.quiz.data.ListaPreguntas
 import com.example.quiz.databinding.ActivityPreguntaBinding
-import com.example.quiz.modelos.ListaPreguntasSerializable
 import com.example.quiz.modelos.Pregunta
 import com.example.quiz.modelos.Respuesta
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -27,15 +26,15 @@ class ActivityPregunta : AppCompatActivity() {
 
     private lateinit var binding: ActivityPreguntaBinding // Es la variable que está haciendo referencia al XML (activity_pregunta.xml)
     private var listaPreguntas: ArrayList<Pregunta> = arrayListOf(); // Variable de tipos lista que deja las preguntas de manera global sobre la clase
-    private var valorOpcion: Int = 0
-    private var posicionPregunta : Int = 0
-    private lateinit var cronometro : CountDownTimer;
+    private var valorOpcion: Int = 0 // opcion que selecciona el usuairo, si es cero, es porque no ha seleccionado nada
+    private var posicionPregunta : Int = 0 // para identificar en preguntas va el quizz
+    private lateinit var cronometro : CountDownTimer; // para definir el temporizador
 
-    private lateinit var reproductorMusica: MediaPlayer
+    private lateinit var reproductorMusica: MediaPlayer // para definir el reproductor de música
 
-    private lateinit var ventanaRespuestaErrada: AlertDialog
+    private lateinit var ventanaRespuestaErrada: AlertDialog // para definir la ventana "dialog" de respuesta errada
 
-    private var back_pressed: Long = 0
+    private var back_pressed: Long = 0 // para confirmar, en caso de salir de la aplicación
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +43,7 @@ class ActivityPregunta : AppCompatActivity() {
         setContentView(binding.root) // lo agregamos la vista
 
         /**
-         * Defininedo el cronometro en milisegundos 30 segundos y un intervalo de 1 segundo
+         * Defininedo el cronometro en milisegundos 15 segundos y un intervalo de 1 segundo
          */
         cronometro = object : CountDownTimer(15000, 1000) {
 
@@ -108,12 +107,12 @@ class ActivityPregunta : AppCompatActivity() {
 
                 //validando que la opción seleccionada seá válida
                 listaPreguntas[posicionPregunta].respuestas.forEach { respuesta: Respuesta ->
+                    // verificando que sea la repuesta correcta para mostrar o no la alerta de respuesta incorrecta
                     if(respuesta.esCorrecto && respuesta.opcionSeleccionadaPorUsuario){
                         //Selecciono la correcta
                         esCorrectoRepuesta = true
                     }
                 }
-
                 if(esCorrectoRepuesta){ // la pregunta seleccionada es correcta
                     verificarMasPreguntasPorMostrar()
                 }else{ // NO selecciono la respuesta correcta
@@ -178,7 +177,6 @@ class ActivityPregunta : AppCompatActivity() {
         valorOpcion = opcion //guardando que opción selecciono el usuario
 
         // se marcar con un estilo diferente la opción seleccionada
-//        view.setBackgroundColor(Color.parseColor("#70AAAA"))
         view.setBackgroundResource(R.drawable.respuesta_seleccionada)
         view.typeface= Typeface.DEFAULT_BOLD
         //Definiendo todas las respuestas del usuario como incorrectas, porque puede en la misma pregunta marcar y desmarcar diferentes opciones
@@ -201,35 +199,48 @@ class ActivityPregunta : AppCompatActivity() {
         for(op in optionList)
         {
             op.setBackgroundResource(R.drawable.opcion_estilo)
-//            op.setTextColor(Color.parseColor("#555151"))
-//            op.setBackgroundColor(Color.parseColor("#70AAAA"))
-//            op.setBackgroundColor(Color.parseColor("#FF018786"))
-//            op.typeface= Typeface.DEFAULT
+            op.typeface= Typeface.DEFAULT
         }
     }
+
+    /**
+     * Método que nos permite saber si hay más preguntas, ya que si no hay más deberá mostrarnos la pantalla de resultados
+     */
     fun verificarMasPreguntasPorMostrar(){
         binding.txtCuentaRegresiva.textSize = 45f
         binding.txtCuentaRegresiva.setTextColor(Color.BLACK)
 
         if((listaPreguntas.size - 1) != posicionPregunta ){ // si pasa es por que aún hay más preguntas
-        Log.i("popsition", "position ${posicionPregunta}")
             posicionPregunta++ // seguir con la siguiente pregunta
             valorOpcion = 0 // restablecer la opción
             definirPregunta() //Mostrar la siguiente pregunta
 
         }else{ // NO hay más preguntas por mostrar
-            var intent = Intent(this, ResultadoActivity::class.java)
+            var intent = Intent(this, ResultadoActivity::class.java) // navegamos a la pantalla de resultados
+            // enviamos las preguntas respondidas por el usuario hacia la otra pantalla
             intent.putParcelableArrayListExtra("preguntasRespondidas", listaPreguntas)
             startActivity(intent)
             finish()
         }
     }
+
+    /**
+     * Nos permite saber cuando el usuario quiere retroceder de pantalla
+     */
     override fun onBackPressed() {
-        if (back_pressed + 2000 > System.currentTimeMillis()) super.onBackPressed() else Toast.makeText(
+        if (back_pressed + 2000 > System.currentTimeMillis()){
+            super.onBackPressed()
+
+        }else Toast.makeText(
             baseContext, "Pulse otra vez para salir", Toast.LENGTH_SHORT
         ).show()
         back_pressed = System.currentTimeMillis()
     }
+
+    /**
+     * Cuando salgamos de la pantalla de de preguntas
+     * Detenemos la música y cancelamos el temporizador
+     */
 
     override fun onDestroy() {
         cronometro.cancel()

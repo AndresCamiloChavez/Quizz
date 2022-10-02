@@ -85,11 +85,7 @@
                     android:id="@+id/graficoBarrasVista"
                     android:layout_width="match_parent"
                     android:layout_height="240dp"
-                    android:layout_marginBottom="40dp"
-                    >
-
-
-                </com.github.mikephil.charting.charts.BarChart>
+                    android:layout_marginBottom="40dp"/>
 
             </LinearLayout>
         </LinearLayout>

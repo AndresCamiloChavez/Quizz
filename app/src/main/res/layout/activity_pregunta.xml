@@ -22,10 +22,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?android:attr/detailsElementBackground"
-            android:text="TextView"
+            android:text="Temporizador"
             android:textSize="32sp"
             android:textStyle="bold"
-
             android:textAlignment="textEnd"
             android:layout_weight="1"
             android:textColor="@color/black"
@@ -71,7 +70,7 @@
                 android:id="@+id/txtContenidoPregunta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Aquí va la pregunta ca la pregunta completa lorem con muchas letras para saba la pregunta completa lorem con muchas letras para sababa la pregunta completa lorem con muchas letras para saber que es lo que está pasando será que se sobre sale de la pantalla "
+                android:text=" simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an "
                 android:textAlignment="center"
                 android:textSize="20sp">
 

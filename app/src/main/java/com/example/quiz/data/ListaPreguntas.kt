@@ -5,21 +5,19 @@ import com.example.quiz.modelos.Respuesta
 
 object ListaPreguntas {
     fun obtenerListaPreguntas(): List<Pregunta>{
-
         var lista: ArrayList<Pregunta> = arrayListOf();
-
 
         lista.addAll(
             listOf(
-                Pregunta("¿1 Quién fundó Santa Marta, capital del departamento Magdalena en Colombia? ",
+                Pregunta("¿Cúal es la capital de Colombia?",
                 mutableListOf(
-                    Respuesta("Rodrigo de Bastidas", false),
-                    Respuesta("Fransisco", true),
-                    Respuesta("Camilo ", false)
+                    Respuesta("Caracas", false),
+                    Respuesta("Bogotá", true),
+                    Respuesta("Tunja ", false)
                 ), "https://upload.wikimedia.org/wikipedia/commons/2/24/Bogot%C3%A1_Colpatria_Night.jpg",
-                    "Porque es una de las capilates más grandes"
+                    "Oficialmente Bogotá, Distrito Capital (antiguamente, Santafé de Bogotá)"
             ),
-                Pregunta("¿2 Entre que siglos fue construida gran la muralla china ?",
+                Pregunta("¿Entre que siglos fue construida gran la muralla china ?",
                     mutableListOf(
                         Respuesta("1982", true),
                         Respuesta("1898", false),
@@ -55,7 +53,7 @@ object ListaPreguntas {
                 )
             )
         )
-        return lista.shuffled()
+        return lista.shuffled() // lista de preguntas aleatoriamente
 
     }
 }
