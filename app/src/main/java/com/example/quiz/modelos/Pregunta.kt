@@ -8,5 +8,5 @@ import java.io.Serializable
 data class Pregunta(
     val contenidoPregunta: String = "",
     val respuestas: List<Respuesta>,
-    val estadoPregunta: Boolean, // para saber si falló o acertó la respuesta
+    val imagen: String? // aquí se agrega la url de la imagen (tiene que ser una imagen válida), pero puede ser null o sea es opcional
 ): Parcelable

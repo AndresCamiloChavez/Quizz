@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -37,11 +38,16 @@ class ActivityPregunta : AppCompatActivity() {
         /**
          * Defininedo el cronometro en milisegundos 30 segundos y un intervalo de 1 segundo
          */
-        cronometro = object : CountDownTimer(30000, 1000) {
+        cronometro = object : CountDownTimer(5000, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
                 binding.txtCuentaRegresiva.text = "Tiempo " + millisUntilFinished / 1000
 
+                //El texto del cronometro se vuelve rojo cuando sea menor a 9
+                if((millisUntilFinished / 1000).toInt() in 1..9){
+                    binding.txtCuentaRegresiva.setTextColor(Color.RED)
+                    binding.txtCuentaRegresiva.textSize = 60f // para que el texto se haga más grande cuando hay menos tiempo
+                }
             }
             override fun onFinish() {
                 binding.txtCuentaRegresiva.text = "El tiempo ha terminado"
@@ -49,7 +55,7 @@ class ActivityPregunta : AppCompatActivity() {
             }
         }
 
-        listaPreguntas = ListaPreguntas.obtenerListaPreguntas()
+        listaPreguntas = ListaPreguntas.obtenerListaPreguntas() as ArrayList<Pregunta> // obtenemos la lista de preguntas
         definirPregunta()
 
         /**
@@ -161,8 +167,11 @@ class ActivityPregunta : AppCompatActivity() {
         }
     }
     fun verificarMasPreguntasPorMostrar(){
+        binding.txtCuentaRegresiva.textSize = 45f
+        binding.txtCuentaRegresiva.setTextColor(Color.BLACK)
 
         if((listaPreguntas.size - 1) != posicionPregunta ){ // si pasa es por que aún hay más preguntas
+        Log.i("popsition", "position ${posicionPregunta}")
             posicionPregunta++ // seguir con la siguiente pregunta
             valorOpcion = 0 // restablecer la opción
             definirPregunta() //Mostrar la siguiente pregunta
@@ -182,6 +191,7 @@ class ActivityPregunta : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        cronometro.cancel()
         super.onDestroy()
     }
 }
