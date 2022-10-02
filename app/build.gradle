@@ -48,4 +48,5 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0' // librería de graficas
     implementation 'com.github.bumptech.glide:glide:4.14.1' // cargar imágenes de internet
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.1' // cargar imágenes de internet
+    implementation 'com.airbnb.android:lottie:5.2.0' // animaciones
 }

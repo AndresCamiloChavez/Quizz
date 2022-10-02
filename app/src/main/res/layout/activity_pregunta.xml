@@ -6,20 +6,41 @@
     android:layout_height="match_parent"
     tools:context=".ActivityPregunta">
 
-    <TextView
-        android:id="@+id/txtCuentaRegresiva"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/detailsElementBackground"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="TextView"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/materialCardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        >
+        <TextView
+            android:id="@+id/txtCuentaRegresiva"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/detailsElementBackground"
+            android:text="TextView"
+            android:textSize="32sp"
+            android:textStyle="bold"
+
+            android:textAlignment="textEnd"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation_view"
+            android:layout_width="140dp"
+            android:layout_height="120dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/running" />
+
+
+    </LinearLayout>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView"
@@ -37,6 +58,14 @@
             android:layout_margin="10dp"
             android:orientation="vertical"
             android:textAlignment="center">
+
+            <ImageView
+                android:id="@+id/imagenPregunta"
+                android:layout_width="200dp"
+                android:layout_height="130dp"
+                android:layout_marginVertical="5dp"
+                android:layout_gravity="center"
+                />
 
             <TextView
                 android:id="@+id/txtContenidoPregunta"
@@ -65,7 +94,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:background="@color/teal_700"
                         android:gravity="center"
                         android:padding="10dp"
                         android:text="option1"
@@ -76,7 +104,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:background="@color/teal_700"
                         android:gravity="center"
                         android:padding="10dp"
                         android:text="option1"
@@ -87,7 +114,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:background="@color/teal_700"
                         android:gravity="center"
                         android:padding="10dp"
                         android:text="option1"
@@ -111,4 +137,13 @@
 
     </com.google.android.material.card.MaterialCardView>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnSonido"
+        android:layout_width="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_lock_silent_mode" />
 </androidx.constraintlayout.widget.ConstraintLayout>

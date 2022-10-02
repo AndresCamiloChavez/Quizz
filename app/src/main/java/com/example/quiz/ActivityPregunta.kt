@@ -3,13 +3,18 @@ package com.example.quiz
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
+import android.media.MediaPlayer
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.quiz.data.ListaPreguntas
 import com.example.quiz.databinding.ActivityPreguntaBinding
 import com.example.quiz.modelos.ListaPreguntasSerializable
@@ -26,10 +31,13 @@ class ActivityPregunta : AppCompatActivity() {
     private var posicionPregunta : Int = 0
     private lateinit var cronometro : CountDownTimer;
 
+    private lateinit var reproductorMusica: MediaPlayer
+
     private lateinit var ventanaRespuestaErrada: AlertDialog
 
     private var back_pressed: Long = 0
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPreguntaBinding.inflate(layoutInflater) // inflamos nuestro XML a la variable
@@ -38,7 +46,7 @@ class ActivityPregunta : AppCompatActivity() {
         /**
          * Defininedo el cronometro en milisegundos 30 segundos y un intervalo de 1 segundo
          */
-        cronometro = object : CountDownTimer(5000, 1000) {
+        cronometro = object : CountDownTimer(15000, 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
                 binding.txtCuentaRegresiva.text = "Tiempo " + millisUntilFinished / 1000
@@ -46,7 +54,7 @@ class ActivityPregunta : AppCompatActivity() {
                 //El texto del cronometro se vuelve rojo cuando sea menor a 9
                 if((millisUntilFinished / 1000).toInt() in 1..9){
                     binding.txtCuentaRegresiva.setTextColor(Color.RED)
-                    binding.txtCuentaRegresiva.textSize = 60f // para que el texto se haga más grande cuando hay menos tiempo
+                    binding.txtCuentaRegresiva.textSize = 55f // para que el texto se haga más grande cuando hay menos tiempo
                 }
             }
             override fun onFinish() {
@@ -54,6 +62,23 @@ class ActivityPregunta : AppCompatActivity() {
                 verificarMasPreguntasPorMostrar()
             }
         }
+
+        //Reproducimos la música
+        reproductorMusica = MediaPlayer.create(this, R.raw.quizmusica)
+        reproductorMusica.start()
+        binding.btnSonido.setOnClickListener {
+            if(reproductorMusica.isPlaying){
+                reproductorMusica.pause()
+                binding.btnSonido.setImageDrawable(resources.getDrawable(R.drawable.ic_volume_plus))
+
+            }else{
+                reproductorMusica.start()
+                binding.btnSonido.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_volume_off))
+
+            }
+
+        }
+
 
         listaPreguntas = ListaPreguntas.obtenerListaPreguntas() as ArrayList<Pregunta> // obtenemos la lista de preguntas
         definirPregunta()
@@ -93,8 +118,9 @@ class ActivityPregunta : AppCompatActivity() {
                     verificarMasPreguntasPorMostrar()
                 }else{ // NO selecciono la respuesta correcta
                     ventanaRespuestaErrada = MaterialAlertDialogBuilder(this).setTitle("Respuesta Incorrecta")
-                        .setMessage("La respuesta es ya que tal y tal motivo")
+                        .setMessage(listaPreguntas[posicionPregunta].descripcionRespuesta)
                         .setCancelable(true)
+                        .setNeutralButton("Aceptar", null)
                         .create()
                     ventanaRespuestaErrada.show()
 
@@ -124,12 +150,27 @@ class ActivityPregunta : AppCompatActivity() {
                 }
             }
         }
+        //Escondemos la imagen, pero en caso de tener imagen se habilita
+        binding.imagenPregunta.visibility = View.GONE
+
+        //válidando si la pregunta contiene imagen
+        if(listaPreguntas[posicionPregunta].imagen != null){
+            binding.imagenPregunta.visibility = View.VISIBLE
+            //Utilizamos la librería para cargar imágenes de internet
+            Glide
+                .with(this)
+                .load(listaPreguntas[posicionPregunta].imagen)
+                .centerCrop()
+                .into(binding.imagenPregunta)
+
+        }
     }
 
     /**
      * Cuando seleccione la opción dejara todas las opciones por defecto
      * de manera tal que se vean igual y luego se agrega el estilo a la opción seleccionada
      */
+    @RequiresApi(Build.VERSION_CODES.M)
     fun opcionSeleccionada(view: TextView, opcion :Int){
 
         desmarcarOpciones() // Esteticamente
@@ -137,10 +178,9 @@ class ActivityPregunta : AppCompatActivity() {
         valorOpcion = opcion //guardando que opción selecciono el usuario
 
         // se marcar con un estilo diferente la opción seleccionada
-        view.setBackgroundColor(Color.parseColor("#70AAAA"))
+//        view.setBackgroundColor(Color.parseColor("#70AAAA"))
+        view.setBackgroundResource(R.drawable.respuesta_seleccionada)
         view.typeface= Typeface.DEFAULT_BOLD
-        view.setTextColor(Color.parseColor("#000000"))
-
         //Definiendo todas las respuestas del usuario como incorrectas, porque puede en la misma pregunta marcar y desmarcar diferentes opciones
         listaPreguntas[posicionPregunta].respuestas.forEach { respuesta: Respuesta ->
             respuesta.opcionSeleccionadaPorUsuario = false
@@ -160,10 +200,11 @@ class ActivityPregunta : AppCompatActivity() {
 
         for(op in optionList)
         {
-            op.setTextColor(Color.parseColor("#555151"))
-            op.setBackgroundColor(Color.parseColor("#70AAAA"))
-            op.setBackgroundColor(Color.parseColor("#FF018786"))
-            op.typeface= Typeface.DEFAULT
+            op.setBackgroundResource(R.drawable.opcion_estilo)
+//            op.setTextColor(Color.parseColor("#555151"))
+//            op.setBackgroundColor(Color.parseColor("#70AAAA"))
+//            op.setBackgroundColor(Color.parseColor("#FF018786"))
+//            op.typeface= Typeface.DEFAULT
         }
     }
     fun verificarMasPreguntasPorMostrar(){
@@ -192,6 +233,7 @@ class ActivityPregunta : AppCompatActivity() {
 
     override fun onDestroy() {
         cronometro.cancel()
+        reproductorMusica.pause()
         super.onDestroy()
     }
 }
