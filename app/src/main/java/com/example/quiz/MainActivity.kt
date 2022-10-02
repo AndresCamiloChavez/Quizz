@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnJugar.setOnClickListener { vista -> // cuando se da clic sobre en el botón de Jugar
             val intent = Intent(this, ActivityPregunta::class.java) // definimos a que pantalla ir
             startActivity(intent) // inicia la nueva actividad
+            finish()
         }
 
     }

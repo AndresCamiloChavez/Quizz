@@ -4,41 +4,48 @@ import com.example.quiz.modelos.Pregunta
 import com.example.quiz.modelos.Respuesta
 
 object ListaPreguntas {
-    fun obtenerListaPreguntas(): List<Pregunta>{
+    fun obtenerListaPreguntas(): ArrayList<Pregunta>{
 
-        var lista: MutableList<Pregunta> = mutableListOf();
+        var lista: ArrayList<Pregunta> = arrayListOf();
 
 
         lista.addAll(
             listOf(
-                Pregunta("¿Entre que siglos fue construida gran la muralla china ?",
+                Pregunta("¿1 Quién fundó Santa Marta, capital del departamento Magdalena en Colombia? ",
                 mutableListOf(
-                    Respuesta("2", false),
-                    Respuesta("1", true),
-                    Respuesta("3", false)
+                    Respuesta("Rodrigo de Bastidas", false),
+                    Respuesta("Fransisco", true),
+                    Respuesta("Camilo ", false)
                 ),false
             ),
-                Pregunta("¿2Entre que siglos fue construida gran la muralla china ?",
+                Pregunta("¿2 Entre que siglos fue construida gran la muralla china ?",
                     mutableListOf(
-                        Respuesta("2", true),
-                        Respuesta("1", false),
-                        Respuesta("3", false)
+                        Respuesta("1982", true),
+                        Respuesta("1898", false),
+                        Respuesta("1931", false)
                     ),false
                 ),
-                Pregunta("¿3 -> Entre que siglos fue construida gran la muralla china ?",
+                Pregunta("¿3 -> ¿Cuál es la forma de gobierno de Colombia?",
                     mutableListOf(
-                        Respuesta("2", true),
-                        Respuesta("1", false),
-                        Respuesta("3", false)
+                        Respuesta("República presidencialista", true),
+                        Respuesta("Congreso", false),
+                        Respuesta("Ninguno", false)
                     ),false
                 ),
-                Pregunta("¿4 Entre que siglos fue construida gran la muralla china ?",
+                Pregunta("¿Cómo se llama el aeropuerto de Bogotá?",
                     mutableListOf(
-                        Respuesta("2", false),
-                        Respuesta("1", false),
-                        Respuesta("3", true)
+                        Respuesta("El Dorado", false),
+                        Respuesta("Aguas Claras", false),
+                        Respuesta("Baracoa", true)
                     ),false
-                )
+                ),
+                Pregunta("¿1 Quién fundó Santa Marta, capital del departamento Magdalena en Colombia? ",
+                    mutableListOf(
+                        Respuesta("Rodrigo de Bastidas", false),
+                        Respuesta("Fransisco", true),
+                        Respuesta("Camilo ", false)
+                    ),false
+                ),
             )
         )
         return lista;
